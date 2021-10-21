@@ -127,17 +127,17 @@ void AppItem::updateIconGeometry()
     rect.moveTo(mapToGlobal(QPoint(0, 0)));
 
     for (quint64 id : m_entry->WIdList) {
-         NETWinInfo info(QX11Info::connection(),
-                         id,
-                         (WId) QX11Info::appRootWindow(),
-                         NET::WMIconGeometry,
-                         QFlags<NET::Property2>(1));
-         NETRect nrect;
-         nrect.pos.x = rect.x();
-         nrect.pos.y = rect.y();
-         nrect.size.height = rect.height();
-         nrect.size.width = rect.width();
-         info.setIconGeometry(nrect);
+        NETWinInfo info(QX11Info::connection(),
+                        id,
+                        (WId) QX11Info::appRootWindow(),
+                        NET::WMIconGeometry,
+                        QFlags<NET::Property2>(1));
+        NETRect nrect;
+        nrect.pos.x = rect.x();
+        nrect.pos.y = rect.y();
+        nrect.size.height = rect.height();
+        nrect.size.width = rect.width();
+        info.setIconGeometry(nrect);
     }
 }
 
@@ -173,12 +173,13 @@ void AppItem::updateIcon()
     const int iconSize = static_cast<int>(qMin(width(), height()) * 0.8);
     const QString iconName = m_entry->iconName;
 
-    m_iconPixmap = Utils::getIcon(iconName, iconSize);
-    // if (m_iconPixmap.isNull()) {
-    //     if (!m_entry->WIdList.isEmpty()) {
-    //         m_iconPixmap = KWindowSystem::icon(m_entry->WIdList.first(), iconSize, iconSize, true);
-    //     }
-    // }
+//    m_iconPixmap = Utils::getIcon(iconName, iconSize);
+//    if (m_iconPixmap.isNull()) {
+    //test code
+    if (!m_entry->WIdList.isEmpty()) {
+        m_iconPixmap = KWindowSystem::icon(m_entry->WIdList.first(), iconSize, iconSize, true);
+    }
+//    }
 
     QWidget::update();
 
@@ -201,7 +202,7 @@ void AppItem::startDrag()
     m_drag = new QDrag(this);
     m_drag->setMimeData(new QMimeData);
 
-    connect(m_drag, &QDrag::destroyed, this, [=] {
+    connect(m_drag, &QDrag::destroyed, this, [ = ] {
         m_dragging = false;
         update();
     });
@@ -245,12 +246,12 @@ void AppItem::paintEvent(QPaintEvent *e)
         QPainterPath path;
         if (position == DockSettings::Left) {
             path.addRoundedRect(QRectF(2,
-                                    (rect().height() - roundSize) / 2,
-                                    roundSize, roundSize), roundSize, roundSize);
+                                       (rect().height() - roundSize) / 2,
+                                       roundSize, roundSize), roundSize, roundSize);
         } else {
             path.addRoundedRect(QRectF((rect().width() - roundSize) / 2,
-                                    rect().height() - roundSize - 2,
-                                    roundSize, roundSize), roundSize, roundSize);
+                                       rect().height() - roundSize - 2,
+                                       roundSize, roundSize), roundSize, roundSize);
         }
 
         painter.drawPath(path);

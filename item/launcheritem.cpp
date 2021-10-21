@@ -40,7 +40,8 @@ void LauncherItem::refreshIcon()
 {
     const int iconSize = static_cast<int>(qMin(width(), height()) * 0.8);
 
-    m_iconPixmap = Utils::getIcon("launcher", iconSize);
+//    m_iconPixmap = Utils::getIcon("launcher", iconSize);
+    m_iconPixmap = Utils::renderSVG(":/resources/launcher.svg", QSize(iconSize * qApp->devicePixelRatio(), iconSize * qApp->devicePixelRatio()));
 
     QWidget::update();
 }

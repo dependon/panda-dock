@@ -30,12 +30,22 @@ set(SRCS main.cpp
 set(FORMS "")
 set(RESOURCES resources.qrc)
 
-set(QT Core Gui Widgets DBus Svg X11Extras)
+set(QT Core Gui Widgets DBus Svg X11Extras LinguistTools)
 find_package(Qt5 REQUIRED ${QT})
 find_package(KF5WindowSystem)
 find_package(X11 REQUIRED)
 
-add_executable(${TARGET} ${SRCS} ${FORMS} ${RESOURCES})
+file(GLOB TS LIST_DIRECTORIES false translations/panda-dock*.ts)
+set_source_files_properties(${TS} PROPERTIES OUTPUT_LOCATION ${PROJECT_SOURCE_DIR}/translations)
+
+qt5_create_translation(QM ${allSources}  ${GLOB})
+
+if (NOT (${CMAKE_BUILD_TYPE} MATCHES "Debug"))
+    qt5_create_translation(QM ${allSources} ${TS})
+endif ()
+
+
+add_executable(${TARGET} ${SRCS} ${FORMS} ${RESOURCES} ${QM})
 target_link_libraries(${TARGET}
         Qt5::Core
         Qt5::Gui
@@ -54,3 +64,17 @@ target_link_libraries(${TARGET}
 )
 
 install(TARGETS ${TARGET} DESTINATION /usr/bin)
+
+#desktop
+install(FILES ${PROJECT_SOURCE_DIR}/install/panda-dock.desktop
+    DESTINATION /usr/share/applications)
+
+set(APPSHAREDIR  /usr/share/panda-dock)
+#translations
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/translations
+    DESTINATION ${APPSHAREDIR}
+    FILES_MATCHING PATTERN "*.qm")
+
+#icon
+install(FILES ${PROJECT_SOURCE_DIR}/install/panda-dock.svg
+    DESTINATION /usr/share/icons)

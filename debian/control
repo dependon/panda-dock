@@ -1,0 +1,12 @@
+Source: panda-dock
+Section: utils
+Priority: optional
+Maintainer: liuminghang  <liuminghang0821@gmail.com>
+Build-Depends: debhelper (>= 9),pkg-config, dpkg-dev, qt5-qmake, qtbase5-dev,qttools5-dev-tools,libkf5windowsystem-dev
+Standards-Version: 0.0-3
+Homepage: panda-dock
+
+Package: panda-dock
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: panda-dock.

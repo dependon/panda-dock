@@ -116,11 +116,11 @@ void MainWindow::updateSize()
 
 void MainWindow::initSlideWindow()
 {
-    if (m_settings->position() == DockSettings::Left) {
-        KWindowEffects::slideWindow(winId(), KWindowEffects::LeftEdge);
-    } else if (m_settings->position() == DockSettings::Bottom) {
-        KWindowEffects::slideWindow(winId(), KWindowEffects::BottomEdge);
-    }
+//    if (m_settings->position() == DockSettings::Left) {
+//        KWindowEffects::slideWindow(winId(), KWindowEffects::LeftEdge);
+//    } else if (m_settings->position() == DockSettings::Bottom) {
+//        KWindowEffects::slideWindow(winId(), KWindowEffects::BottomEdge);
+//    }
 }
 
 void MainWindow::updateStrutPartial()
@@ -161,18 +161,18 @@ void MainWindow::updateStrutPartial()
     }
 
     KWindowSystem::setExtendedStrut(winId(),
-                                     strut.left_width,
-                                     strut.left_start,
-                                     strut.left_end,
-                                     strut.right_width,
-                                     strut.right_start,
-                                     strut.right_end,
-                                     strut.top_width,
-                                     strut.top_start,
-                                     strut.top_end,
-                                     strut.bottom_width,
-                                     strut.bottom_start,
-                                     strut.bottom_end);
+                                    strut.left_width,
+                                    strut.left_start,
+                                    strut.left_end,
+                                    strut.right_width,
+                                    strut.right_start,
+                                    strut.right_end,
+                                    strut.top_width,
+                                    strut.top_start,
+                                    strut.top_end,
+                                    strut.bottom_width,
+                                    strut.bottom_start,
+                                    strut.bottom_end);
 
 //    KWindowSystem::setState(m_fakeWidget->winId(), NET::SkipTaskbar);
 //    KWindowSystem::setState(m_fakeWidget->winId(), NET::SkipSwitcher);
